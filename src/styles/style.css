@@ -1,0 +1,48 @@
+/*comment*/
+:root {
+    --text-color: white;
+    --Button-hover-text-color: black;
+    --secondary-color: #00ff00;
+    --background-color: black;
+    --border-color: white;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 2rem;
+    margin-right: 1rem;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.site-header,
+main,
+footer {
+    width: min(1100px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.film-card {
+    min-height: 300px;
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+
+}
+
+.film-card-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--Button-hover-text-color);
+}
+
+.film-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
