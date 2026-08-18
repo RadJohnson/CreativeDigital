@@ -5,6 +5,7 @@
     --secondary-color: #00ff00;
     --background-color: black;
     --border-color: white;
+    --border-color2: #00ff00;
 }
 
 * {
@@ -36,6 +37,13 @@ footer {
 
 }
 
+.film-card--selected {
+    min-height: 300px;
+    padding: 1.25rem;
+    border: 5px solid var(--border-color2);
+}
+
+
 .film-card-button:hover {
     background-color: var(--secondary-color);
     color: var(--Button-hover-text-color);
@@ -45,4 +53,15 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
+}
+
+.row-side {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: auto auto;
 }
