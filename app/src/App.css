@@ -1,26 +1,26 @@
-/*comment*/
-:root {
-    --text-color: white;
-    --Button-hover-text-color: black;
-    --secondary-color: #00ff00;
-    --background-color: black;
-    --border-color: white;
-    --border-color2: #00ff00;
-}
+/*likely wants to be the case that all px measurements change to rems and frs and that type of unit*/
+
+/* =====================================
+   RESET
+===================================== */
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+
+/* =====================================
+   BODY
+===================================== */
+
 body {
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 2rem;
-    margin-right: 1rem;
+
     font-family: Arial, sans-serif;
     line-height: 1.5;
-    color: var(--text-color);
-    background-color: var(--background-color);
+    color: white;
+    background-color: black;
 }
 
 .site-header,
@@ -34,34 +34,272 @@ footer {
     min-height: 300px;
     padding: 1.25rem;
     border: 1px solid var(--border-color);
-
 }
 
-.film-card--selected {
-    min-height: 300px;
-    padding: 1.25rem;
-    border: 5px solid var(--border-color2);
+/* =====================================
+   MAIN EXPLORER LAYOUT
+===================================== */
+
+/*
+    THIS controls the layout of:
+
+        FILTERS | FILMS
+
+    NOT the individual films.
+*/
+
+.explorer {
+    display: grid;
+
+    /*
+        We are explicitly creating
+        TWO columns.
+
+        Column 1 = 240px
+        Column 2 = remaining space
+    */
+    grid-template-columns: 240px 1fr;
+
+    /*
+        Give the two columns some space
+        between them.
+    */
+    column-gap: 30px;
+
+    /*
+        Use the full available width.
+    */
+    width: 100%;
+
+    /*
+        Don't let it get ridiculously
+        wide on huge monitors.
+    */
+    max-width: 1400px;
+
+    /*
+        Centre the whole explorer.
+    */
+    margin: 0 auto;
+
+    /*
+        Space around the layout.
+    */
+    padding: 30px;
 }
 
 
-.film-card-button:hover {
-    background-color: var(--secondary-color);
-    color: var(--Button-hover-text-color);
+/* =====================================
+   FILTER SIDEBAR
+===================================== */
+
+.filters {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+
+    /*
+        IMPORTANT:
+
+        This tells the sidebar to occupy
+        the FIRST column of .explorer.
+    */
+    grid-column: 1;
 }
+
+.filters h2 {
+    margin-bottom: 30px;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+}
+
+
+.filter-group h3 {
+    margin-bottom: 15px;
+    color: #aaa;
+}
+
+
+.filter-group label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+/* =====================================
+   FILM SECTION
+===================================== */
+
+.films {
+    /*
+        IMPORTANT:
+
+        This tells the film section to
+        occupy the SECOND column.
+
+        Therefore:
+
+        Filters | Films
+
+        rather than:
+
+        Filters
+        Films
+    */
+    grid-column: 2;
+    width: 100%;
+}
+
+
+/* =====================================
+   FILM HEADER
+===================================== */
+
+.films-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+.films-header h1 {
+    margin-bottom: 5px;
+}
+
+.films-header p {
+    color: #888;
+}
+
+/* =====================================
+   FILM GRID
+===================================== */
 
 .film-grid {
+    /*
+        This creates the GRID containing
+        the actual films.
+    */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+
+    /*
+        Four columns.
+
+        Each column gets an equal
+        share of the available space.
+    */
+
+    grid-template-columns:
+        repeat(4, 1fr);
+    /*
+        Space between the films.
+    */
+    gap: 20px;
 }
 
-.row-side {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+
+/* =====================================
+   FILM CARD
+===================================== */
+
+.film-card {
+    width: 100%;
 }
 
-.page-container {
-    display: grid;
-    grid-template-columns: auto auto;
+.film-card img {
+    display: block;
+    width: 100%;
+    /*
+        Movie poster shape.
+    */
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.film-card h2 {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.film-card p {
+    color: #888;
+    font-size: 14px;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 1000px) {
+    /*
+        Make the sidebar narrower.
+    */
+    .explorer {
+        grid-template-columns: 200px 1fr;
+    }
+
+
+    /*
+        Three film columns.
+    */
+    .film-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+    .explorer {
+        /*
+            Change from:
+
+            FILTERS | FILMS
+
+            to:
+
+            FILTERS
+            FILMS
+        */
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .filters {
+        /*
+            Reset its desktop position.
+        */
+        grid-column: 1;
+    }
+
+    .films {
+        /*
+            Films now occupy the
+            single mobile column.
+        */
+        grid-column: 1;
+    }
+
+    /*
+        Two films per row.
+    */
+    .film-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+        gap: 15px;
+    }
 }
