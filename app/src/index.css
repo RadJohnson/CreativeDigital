@@ -1,111 +1,305 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/*likely wants to be the case that all px measurements change to rems and frs and that type of unit*/
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* =====================================
+   RESET
+===================================== */
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+/* =====================================
+   BODY
+===================================== */
 
 body {
-  margin: 0;
+
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: white;
+    background-color: black;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+.site-header,
+main,
+footer {
+    width: min(1100px, calc(100% - 2rem));
+    margin: 0 auto;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.film-card {
+    min-height: 300px;
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+/* =====================================
+   MAIN EXPLORER LAYOUT
+===================================== */
+
+/*
+    THIS controls the layout of:
+
+        FILTERS | FILMS
+
+    NOT the individual films.
+*/
+
+.explorer {
+    display: grid;
+
+    /*
+        We are explicitly creating
+        TWO columns.
+
+        Column 1 = 240px
+        Column 2 = remaining space
+    */
+    grid-template-columns: 240px 1fr;
+
+    /*
+        Give the two columns some space
+        between them.
+    */
+    column-gap: 30px;
+
+    /*
+        Use the full available width.
+    */
+    width: 100%;
+
+    /*
+        Don't let it get ridiculously
+        wide on huge monitors.
+    */
+    max-width: 1400px;
+
+    /*
+        Centre the whole explorer.
+    */
+    /* margin: 0 auto; */
+
+    /*
+        Space around the layout.
+    */
+    padding: 30px;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+
+/* =====================================
+   FILTER SIDEBAR
+===================================== */
+
+.filters {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+
+    /*
+        IMPORTANT:
+
+        This tells the sidebar to occupy
+        the FIRST column of .explorer.
+    */
+    grid-column: 1;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.filters h2 {
+    margin-bottom: 30px;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #444;
+}
+
+
+.filter-group h3 {
+    margin-bottom: 15px;
+    color: #aaa;
+}
+
+
+.filter-group label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+/* =====================================
+   FILM SECTION
+===================================== */
+/* no such class atribute exsists */
+.films {
+    /*
+        IMPORTANT:
+
+        This tells the film section to
+        occupy the SECOND column.
+
+        Therefore:
+
+        Filters | Films
+
+        rather than:
+
+        Filters
+        Films
+    */
+    grid-column: 2;
+    width: 100%;
+}
+
+
+/* =====================================
+   FILM HEADER
+===================================== */
+
+.films-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+.films-header h1 {
+    margin-bottom: 5px;
+}
+
+.films-header p {
+    color: #888;
+}
+
+/* =====================================
+   FILM GRID
+===================================== */
+
+.film-grid {
+    /*
+        This creates the GRID containing
+        the actual films.
+    */
+    display: grid;
+
+    /*
+        Four columns.
+
+        Each column gets an equal
+        share of the available space.
+    */
+
+    grid-template-columns:
+        repeat(4, 1fr);
+    /*
+        Space between the films.
+    */
+    gap: 20px;
+}
+
+
+/* =====================================
+   FILM CARD
+===================================== */
+
+.film-card {
+    width: 100%;
+}
+
+.film-card img {
+    display: block;
+    width: 100%;
+    /*
+        Movie poster shape.
+    */
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.film-card h2 {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.film-card p {
+    color: #888;
+    font-size: 14px;
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 1000px) {
+    /*
+        Make the sidebar narrower.
+    */
+    .explorer {
+        grid-template-columns: 200px 1fr;
+    }
+
+
+    /*
+        Three film columns.
+    */
+    .film-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+    .explorer {
+        /*
+            Change from:
+
+            FILTERS | FILMS
+
+            to:
+
+            FILTERS
+            FILMS
+        */
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .filters {
+        /*
+            Reset its desktop position.
+        */
+        grid-column: 1;
+    }
+
+    .films {
+        /*
+            Films now occupy the
+            single mobile column.
+        */
+        grid-column: 1;
+    }
+
+    /*
+        Two films per row.
+    */
+    .film-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+        gap: 15px;
+    }
 }

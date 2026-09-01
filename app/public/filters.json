@@ -1,0 +1,26 @@
+[
+    {
+        "id": "filter-01",
+        "name": "Action",
+        "buttonImage": "/images/action",
+        "buttonAlt": "Button image for Action Button"
+    },
+    {
+        "id": "filter-02",
+        "name": "Comedy",
+        "buttonImage": "/images/Comedy",
+        "buttonAlt": "Button image for Comedy Button"
+    },
+    {
+        "id": "filter-03",
+        "name": "Drama",
+        "buttonImage": "/images/Drama",
+        "buttonAlt": "Button image for Drama Button"
+    },
+    {
+        "id": "filter-04",
+        "name": "Horror",
+        "buttonImage": "/images/Horror",
+        "buttonAlt": "Button image for Horror Button"
+    }
+]
