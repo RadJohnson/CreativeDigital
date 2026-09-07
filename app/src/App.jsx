@@ -46,8 +46,8 @@ function App() {
                 // setIsLoading(false);
             })
             .catch((problem) => {
-                // setError(problem.message);
-                // setIsLoading(false);
+                setError(problem.message);
+                setIsLoading(false);
             });
     }, []);
 
