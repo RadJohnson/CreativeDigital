@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
-// import './index.css'
+
+import './index.css'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                 if (!response.ok) {
                     throw new Error("Could not load the film filter options.");
                 }
+                return response.json();
             })
             .then((data) => {
                 setFilters(data);
@@ -56,12 +58,13 @@ function App() {
             setSelectedIds([...selectedIds, id]);
         }
     }
-    
+
 
     return (
         <>
-            <div className="explorer">
+            {/*<main>*/}
 
+            <div className="explorer">
 
                 {/*FILTERS*/}
 
@@ -71,20 +74,20 @@ function App() {
 
                     <p>Genre</p>
                     {filters.map((filter) => (<ToggleButton
-                        key={filter.id}
-                        id={filter.id}
-                        name={filter.name}
-                        buttoniamge={filter.buttoniamge}
-                        buttonAlt={filter.buttonAlt}
-                    />
+                            key={filter.id}
+                            id={filter.id}
+                            name={filter.name}
+                            buttonimage={filter.buttonimage}
+                            buttonAlt={filter.buttonAlt}
+                        />
                     ))}
-                    <p>☐ Action</p>
+                    {/*<p>☐ Action</p>*/}
 
-                    <p>☐ Comedy</p>
+                    {/*<p>☐ Comedy</p>*/}
 
-                    <p>☐ Drama</p>
+                    {/*<p>☐ Drama</p>*/}
 
-                    <p>☐ Horror</p>
+                    {/*<p>☐ Horror</p>*/}
 
                 </aside>
 
@@ -92,9 +95,9 @@ function App() {
 
                 {error && <p className="archive-status">{error}</p>}
                 {!isLoading && !error && (
-                    <main>
-
+                    <div>
                         {/*FILMS*/}
+
                         <h1>Films</h1>
 
                         <div className="film-grid">
@@ -118,9 +121,10 @@ function App() {
                             ))}
 
                         </div>
-                    </main>
+                        </div>
                 )}
             </div>
+            {/*</main>*/}
         </>
     );
 }

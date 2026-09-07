@@ -75,7 +75,7 @@ footer {
         Don't let it get ridiculously
         wide on huge monitors.
     */
-    max-width: 1400px;
+    /*max-width: 1400px;*/
 
     /*
         Centre the whole explorer.
@@ -130,32 +130,6 @@ footer {
     cursor: pointer;
 }
 
-
-/* =====================================
-   FILM SECTION
-===================================== */
-/* no such class atribute exsists */
-.films {
-    /*
-        IMPORTANT:
-
-        This tells the film section to
-        occupy the SECOND column.
-
-        Therefore:
-
-        Filters | Films
-
-        rather than:
-
-        Filters
-        Films
-    */
-    grid-column: 2;
-    width: 100%;
-}
-
-
 /* =====================================
    FILM HEADER
 ===================================== */
@@ -194,8 +168,7 @@ footer {
         share of the available space.
     */
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     /*
         Space between the films.
     */
