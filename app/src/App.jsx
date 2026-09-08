@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
 
@@ -71,16 +71,20 @@ function App() {
                 <aside className="filters">
 
                     <h2>Filters</h2>
-
                     <p>Genre</p>
-                    {filters.map((filter) => (<ToggleButton
+
+                    {/* consider getting all the possible filter options to be loaded in to the list box with filter catagory to be above the options within that list */}
+                    <select className="filter-list-genre" multiple>
+                        {filters.map((filter) => (<ToggleButton
                             key={filter.id}
                             id={filter.id}
                             name={filter.name}
                             buttonimage={filter.buttonimage}
                             buttonAlt={filter.buttonAlt}
+
                         />
-                    ))}
+                        ))}
+                    </select>
                     {/*<p>☐ Action</p>*/}
 
                     {/*<p>☐ Comedy</p>*/}
@@ -121,7 +125,7 @@ function App() {
                             ))}
 
                         </div>
-                        </div>
+                    </div>
                 )}
             </div>
             {/*</main>*/}

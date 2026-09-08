@@ -88,6 +88,16 @@ footer {
     padding: 30px;
 }
 
+/* =====================================
+   FILTER LIST
+===================================== */
+
+
+.filter-list-genre {
+    height:fit-content;
+    appearance: base-select;
+}
+
 
 /* =====================================
    FILTER SIDEBAR
@@ -212,6 +222,7 @@ footer {
 ===================================== */
 
 @media (max-width: 1000px) {
+
     /*
         Make the sidebar narrower.
     */

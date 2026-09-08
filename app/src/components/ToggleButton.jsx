@@ -1,10 +1,12 @@
-function ToggleButton() {
+function ToggleButton({ id, name, buttonImage, buttonAlt, onToggleSelect, isSelected }) {
     return (
-    <div>
-        button place hold text
-        {/*need to add the button along with the text data */}
-    </div>
-);
+        <option value={name}>
+            {name}
+            {/* <input type="checkbox" onClick={onToggleSelect(id)} /> */}
+
+        </option>
+
+    );
 }
 
 export default ToggleButton;
