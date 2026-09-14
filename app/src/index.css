@@ -96,6 +96,9 @@ footer {
 .filter-list-genre {
     height:fit-content;
     appearance: base-select;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* need to sort the sizing out later */
+    gap: 10px;
 }
 
 
@@ -139,6 +142,36 @@ footer {
     margin-bottom: 10px;
     cursor: pointer;
 }
+
+/*added for the selectable filter options*/
+.pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid #444; /* matches your existing .filter-group border color */
+    border-radius: 999px;
+    cursor: pointer;
+    color: white; /* matches your body text color */
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+/* When this pill's own checkbox is checked, invert it —
+   light background, dark text — so it visually reads as "on". */
+.pill:has(input:checked) {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.pill input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
 
 /* =====================================
    FILM HEADER

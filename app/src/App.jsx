@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
 
@@ -7,6 +7,7 @@ import './index.css'
 
 function App() {
     const [filters, setFilters] = useState([])
+    const [selectedFilter, setSelectedFilter] = useState([])
     const [films, setFilms] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +44,7 @@ function App() {
             })
             .then((data) => {
                 setFilters(data);
-                // setIsLoading(false);
+                setIsLoading(false);
             })
             .catch((problem) => {
                 setError(problem.message);
@@ -59,6 +60,15 @@ function App() {
         }
     }
 
+    // change the above function so it takes more arguments and it more reusable
+    function FilterSelecter(id) {
+        if (selectedFilter.includes(id)) {
+            setSelectedFilter(selectedFilter.filter((selectedFilter) => selectedFilter !== id));
+        } else {
+            setSelectedFilter([...selectedFilter, id]);
+        }
+        console.log(selectedFilter);
+    }
 
     return (
         <>
@@ -73,18 +83,22 @@ function App() {
                     <h2>Filters</h2>
                     <p>Genre</p>
 
-                    {/* consider getting all the possible filter options to be loaded in to the list box with filter catagory to be above the options within that list */}
-                    <select className="filter-list-genre" multiple>
-                        {filters.map((filter) => (<ToggleButton
-                            key={filter.id}
-                            id={filter.id}
-                            name={filter.name}
-                            buttonimage={filter.buttonimage}
-                            buttonAlt={filter.buttonAlt}
-
-                        />
+                    {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
+                    {/*<select className="filter-list-genre" multiple>*/}
+                    <div className="filter-list-genre" multiple>
+                        {filters.map((filter) => (
+                            <ToggleButton
+                                key={filter.id}
+                                id={filter.id}
+                                name={filter.name}
+                                buttonimage={filter.buttonimage}
+                                buttonAlt={filter.buttonAlt}
+                                // isSelected={FilterSelecter}//doesn't work
+                            />
                         ))}
-                    </select>
+                    </div>
+                    {/*</select>*/}
+
                     {/*<p>☐ Action</p>*/}
 
                     {/*<p>☐ Comedy</p>*/}
