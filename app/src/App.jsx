@@ -1,20 +1,27 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
 
 import './index.css'
-
+// TODO : Move functions to bottom of the page
 
 function App() {
+
+    // for tracking selected filter options
     const [filters, setFilters] = useState([])
-    const [selectedFilter, setSelectedFilter] = useState([])
+    const [selectedFilters, setSelectedFilter] = useState([])
+
+    // for tracking clicked film buttons
     const [films, setFilms] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
+
+    // for error handling when loading films and filter options 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     // useEffect runs code that is not part of describing the interface.
     // The empty array at the end means "run this once, when the application
+    // only runs on first load bcause of [] being empty
     // starts", rather than after every render.
     useEffect(() => {
         fetch("/films.json")
@@ -60,15 +67,37 @@ function App() {
         }
     }
 
-    // change the above function so it takes more arguments and it more reusable
+    // change the above function so it takes more arguments and it more reusable as they will effectively do the same thing
     function FilterSelecter(id) {
-        if (selectedFilter.includes(id)) {
-            setSelectedFilter(selectedFilter.filter((selectedFilter) => selectedFilter !== id));
+        if (selectedFilters.includes(id)) {
+            setSelectedFilter(selectedFilters.filter((selectedFilters) => selectedFilters !== id));
         } else {
-            setSelectedFilter([...selectedFilter, id]);
+            setSelectedFilter([...selectedFilters, id]);
         }
-        console.log(selectedFilter);
     }
+
+    console.log("films", films);
+    // genre
+    // country
+    // year
+    // shooting format
+    // editorial type
+    // lens size
+
+    // would like to get a two point slider for runtime or something like that
+
+
+
+    // films.forEach(film => { });
+    // TODO: do not understand ...new set look into this
+    const genre = [...new Set(films.map(film => film.genre))];
+
+    console.log("genre list ", genre);
+    // const country;
+    // const year;
+    // const shootingFormat;
+    // const editorialType;
+    // const lensSize;
 
     return (
         <>
@@ -83,17 +112,36 @@ function App() {
                     <h2>Filters</h2>
                     <p>Genre</p>
 
+                    {/* TODO: figure out if it is possible to grab filter options based on the data ascociated to the complete dataset */}
                     {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
                     {/*<select className="filter-list-genre" multiple>*/}
-                    <div className="filter-list-genre" multiple>
+                    <div className="filter-list-genre" >
+
+
+                        {films.map((filter) => (
+                            <ToggleButton
+                                key={filter.id}
+                                id={filter.id}
+                                name={filter.name}
+                                synopsis={filter.synopsis}
+                                form={filter.form}
+                                country={filter.country}
+                                year={filter.year}
+                                runtimeMinutes={filter.runtimeMinutes}
+                                themes={filter.themes}
+                                isSelected={selectedFilters.includes(filter.id)}
+                                onToggleSelect={FilterSelecter}
+                            />
+                        ))}
+
+
                         {filters.map((filter) => (
                             <ToggleButton
                                 key={filter.id}
                                 id={filter.id}
                                 name={filter.name}
-                                buttonimage={filter.buttonimage}
-                                buttonAlt={filter.buttonAlt}
-                                // isSelected={FilterSelecter}//doesn't work
+                                isSelected={selectedFilters.includes(filter.id)}
+                                onToggleSelect={FilterSelecter}
                             />
                         ))}
                     </div>
@@ -118,6 +166,7 @@ function App() {
 
                         <h1>Films</h1>
 
+                        {/* TODO: determine best method of hiding / revlealing film list refer to showcase example */}
                         <div className="film-grid">
 
                             {films.map((film) => (

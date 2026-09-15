@@ -143,6 +143,8 @@ footer {
     cursor: pointer;
 }
 
+
+/* TODO: Make Pill text unselectable*/
 /*added for the selectable filter options*/
 .pill {
     position: relative;
@@ -165,6 +167,8 @@ footer {
     border-color: white;
 }
 
+/* TODO: look into this later on */
+/* dont think this does anything */
 .pill input {
     position: absolute;
     opacity: 0;
