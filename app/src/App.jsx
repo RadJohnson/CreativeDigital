@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
 
 import './index.css'
+
 // TODO : Move functions to bottom of the page
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
 
     // useEffect runs code that is not part of describing the interface.
     // The empty array at the end means "run this once, when the application
-    // only runs on first load bcause of [] being empty
+    // only runs on first load because of [] being empty
     // starts", rather than after every render.
     useEffect(() => {
         fetch("/films.json")
@@ -76,7 +77,7 @@ function App() {
         }
     }
 
-    console.log("films", films);
+    // console.log("films", films);
     // genre
     // country
     // year
@@ -86,114 +87,181 @@ function App() {
 
     // would like to get a two point slider for runtime or something like that
 
-
-
     // films.forEach(film => { });
     // TODO: do not understand ...new set look into this
-    const genre = [...new Set(films.map(film => film.genre))];
 
-    console.log("genre list ", genre);
-    // const country;
+    const form = [...new Set(films.map(film => film.form))];
+    const genres = [...new Set(films.flatMap(film => film.genres))];
+    const themes = [...new Set(films.flatMap(film => film.themes))];
+    const country = [...new Set(films.map(film => film.country))];
+    const shootingFormat = [...new Set(films.map(film => film.shootingFormat))];
+    const editorialType = [...new Set(films.map(film => film.editorialType))];
+    const aspectRatio = [...new Set(films.map(film => film.aspectRatio))];
+    const color = [...new Set(films.map(film => film.colour))];
+
+
+    const filterCategories = [
+        {
+            categoryName: "Form",
+            filterCategory: form,
+        },
+        {
+            categoryName: "Genres",
+            filterCategory: genres
+        },
+        {
+            categoryName: "Themes",
+            filterCategory: themes
+        },
+        {
+            categoryName: "Country",
+            filterCategory: country
+        },
+        {
+            categoryName: "ShootingFormat",
+            filterCategory: shootingFormat
+        },
+        {
+            categoryName: "EditorialType",
+            filterCategory: editorialType
+        },
+        {
+            categoryName: "AspectRatio",
+            filterCategory: aspectRatio
+        },
+        {
+            categoryName: "Colour",
+            filterCategory: color
+        }
+    ];
+
+    for (let i = 0, id = 0; i < filterCategories.length; i++) {
+        let filterCategoryIds = [];
+        for (let j = 0; j < filterCategories[i].filterCategory.length; j++) {
+            filterCategoryIds[j] = id;
+            id++;
+        }
+        filterCategories[i].id = filterCategoryIds;
+        /*add the array and the contents here*/
+    }
+
+    //console.log(filterCategories);
+
+    // console.log(filterCategories);
     // const year;
-    // const shootingFormat;
-    // const editorialType;
-    // const lensSize;
+    // console.log("form list", form);
+    // console.log("genre list ", genres);
+    // console.log("theme list ", themes);
 
-    return (
-        <>
-            {/*<main>*/}
+    return <>
+        {/*<main>*/}
 
-            <div className="explorer">
+        <div className="explorer">
 
-                {/*FILTERS*/}
+            {/*FILTERS*/}
 
-                <aside className="filters">
+            <aside className="filters">
 
-                    <h2>Filters</h2>
-                    <p>Genre</p>
+                <h2>Filters</h2>
 
-                    {/* TODO: figure out if it is possible to grab filter options based on the data ascociated to the complete dataset */}
-                    {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
-                    {/*<select className="filter-list-genre" multiple>*/}
-                    <div className="filter-list-genre" >
+                {/* TODO: figure out if it is possible to grab filter options based on the data associated to the complete dataset */}
+                {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
+                {/*<select className="filter-list-genre" multiple>*/}
+                <div className="filter-list-genre">
+                    {
+                        filterCategories.map((filterCategory) => (
+                                //do not understand why this is needed
+                                <div>
+                                    <p>{filterCategory.categoryName}</p>
+
+                                    {/*likely need to map through and another underneath similar to this*/}
+                                    {/*this just needs to be the same as the category name*/}
+                                    {
+                                        //TODO: need to rename the local variable filter category
+                                        filterCategory.filterCategory.map((filter, j) => (
+
+                                            <ToggleButton
+                                                key={filterCategory.id[j]}// need to just set these to be equal to current iteration fo the loop right?
+                                                id={filterCategory.id[j]} // need to just set these to be equal to current iteration fo the loop right?
+                                                name={filterCategory.filterCategory[j]}
+                                                onToggleSelect={FilterSelecter}
+                                            />
+                                        ))
+
+                                    }
+                                </div>
+                            ),
+                        )
+                    }
 
 
-                        {films.map((filter) => (
-                            <ToggleButton
-                                key={filter.id}
-                                id={filter.id}
-                                name={filter.name}
-                                synopsis={filter.synopsis}
-                                form={filter.form}
-                                country={filter.country}
-                                year={filter.year}
-                                runtimeMinutes={filter.runtimeMinutes}
-                                themes={filter.themes}
-                                isSelected={selectedFilters.includes(filter.id)}
-                                onToggleSelect={FilterSelecter}
-                            />
-                        ))}
+                    {/*{filters.map((filter) => (*/}
+                    {/*    <ToggleButton*/}
+                    {/*        key={filter.id}*/}
+                    {/*        id={filter.id}*/}
+                    {/*        name={filter.name}*/}
+                    {/*        isSelected={selectedFilters.includes(filter.id)}*/}
+                    {/*        onToggleSelect={FilterSelecter}*/}
+                    {/*    />*/}
+                    {/*))}*/}
+                </div>
+                {/*</select>*/}
 
+                {/*<p>☐ Action</p>*/}
 
-                        {filters.map((filter) => (
-                            <ToggleButton
-                                key={filter.id}
-                                id={filter.id}
-                                name={filter.name}
-                                isSelected={selectedFilters.includes(filter.id)}
-                                onToggleSelect={FilterSelecter}
-                            />
-                        ))}
-                    </div>
-                    {/*</select>*/}
+                {/*<p>☐ Comedy</p>*/}
 
-                    {/*<p>☐ Action</p>*/}
+                {/*<p>☐ Drama</p>*/}
 
-                    {/*<p>☐ Comedy</p>*/}
+                {/*<p>☐ Horror</p>*/}
 
-                    {/*<p>☐ Drama</p>*/}
+            </aside>
 
-                    {/*<p>☐ Horror</p>*/}
+            {
+                isLoading && <p className="archive-status">Loading the archive...</p>
+            }
 
-                </aside>
-
-                {isLoading && <p className="archive-status">Loading the archive...</p>}
-
-                {error && <p className="archive-status">{error}</p>}
-                {!isLoading && !error && (
+            {
+                error && <p className="archive-status">{error}</p>
+            }
+            {
+                !isLoading && !error && (
                     <div>
                         {/*FILMS*/}
 
                         <h1>Films</h1>
 
-                        {/* TODO: determine best method of hiding / revlealing film list refer to showcase example */}
+                        {/* TODO: determine best method of hiding / revealing film list refer to showcase example */}
                         <div className="film-grid">
 
-                            {films.map((film) => (
-                                <FilmCard
-                                    key={film.id}
-                                    id={film.id}
-                                    title={film.title}
-                                    synopsis={film.synopsis}
-                                    form={film.form}
-                                    country={film.country}
-                                    year={film.year}
-                                    runtimeMinutes={film.runtimeMinutes}
-                                    themes={film.themes}
-                                    poster={film.poster}
-                                    posterAlt={film.posterAlt}
-                                    isSelected={selectedIds.includes(film.id)}
-                                    onToggleSelect={handleToggleSelect}
-                                />
-                            ))}
+                            {
+                                films.map((film) => (
+                                    <FilmCard
+                                        key={film.id}
+                                        id={film.id}
+                                        title={film.title}
+                                        synopsis={film.synopsis}
+                                        form={film.form}
+                                        country={film.country}
+                                        year={film.year}
+                                        runtimeMinutes={film.runtimeMinutes}
+                                        themes={film.themes}
+                                        poster={film.poster}
+                                        posterAlt={film.posterAlt}
+                                        isSelected={selectedIds.includes(film.id)}
+                                        onToggleSelect={handleToggleSelect}
+                                    />
+                                ))
+                            }
 
                         </div>
                     </div>
-                )}
-            </div>
-            {/*</main>*/}
-        </>
-    );
+                )
+            }
+        </div>
+        {/*</main>*/
+        }
+    </>;
 }
 
 export default App
