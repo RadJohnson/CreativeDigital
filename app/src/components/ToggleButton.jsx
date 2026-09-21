@@ -1,3 +1,6 @@
+import '../styles/toggleButton.css'
+
+
 function ToggleButton({id, name, onToggleSelect, isSelected}) {
     return (
         

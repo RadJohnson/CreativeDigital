@@ -1,3 +1,6 @@
+import '../styles/filmCard.css'
+
+
 function FilmCard({ id, title, synopsis, form, country, year, runtimeMinutes, themes, poster, posterAlt, isSelected, onToggleSelect }) {
 
     const cardClass = isSelected ? "film-card film-card--selected" : "film-card";

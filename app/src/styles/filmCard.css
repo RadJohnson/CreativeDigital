@@ -1,0 +1,141 @@
+/* =====================================
+   FilmCard.css  —  ONE FILM CARD
+
+   Imported by FilmCard.jsx, so it's only loaded when that
+   component is used.
+
+   IMPORTANT CONCEPT: "imported" does NOT mean "scoped".
+   Vite bundles every imported .css file into ONE stylesheet
+   that applies to the WHOLE page. So a plain `p { }` rule in
+   this file would restyle every <p> in the app.
+
+   To stay safe, every rule here starts with a class unique to
+   this component. The naming pattern is called BEM:
+
+       .film-card               the Block (the component)
+       .film-card__poster       an Element inside it  (double underscore)
+       .film-card--selected     a Modifier / state    (double dash)
+
+   Nothing outside FilmCard should ever use a .film-card class.
+===================================== */
+
+
+/* =====================================
+   THE CARD ITSELF  (<article className="film-card">)
+
+   (Your old file declared .film-card twice; merged into one.)
+===================================== */
+
+.film-card {
+    width: 100%;
+    min-height: 18.75rem; /* 300px: never shorter than this, can grow */
+    padding: 1.25rem;
+    border: 1px solid var(--border-color);
+}
+
+/*
+    MODIFIER: FilmCard.jsx adds this second class when the card
+    is in the programme:  "film-card film-card--selected"
+
+    It only needs to say what is DIFFERENT. Everything from
+    .film-card still applies, we just override the border colour.
+*/
+.film-card--selected {
+    border-color: white;
+}
+
+
+/* =====================================
+   POSTER
+
+   Used on the <img> when there is artwork, AND on the fallback
+   <div> when there isn't, so both take up identical space and
+   the grid rows stay lined up.
+===================================== */
+
+.film-card__poster {
+    display: block;
+    /* images are "inline" by default, which leaves a
+                          tiny gap underneath; block removes it */
+    width: 100%;
+    aspect-ratio: 2 / 3; /* movie poster shape: width 2 : height 3 */
+    object-fit: cover;
+    /* fill the box, cropping the image if needed
+                             rather than squashing it */
+    border-radius: 0.5rem;
+}
+
+/*
+    The "No artwork" fallback <div>. It has BOTH classes:
+        class="film-card__poster film-card__poster--missing"
+    so it inherits the size/shape above, then this adds a
+    placeholder look.
+
+    display: flex + the two align rules is the standard way to
+    centre text horizontally and vertically in a box.
+
+    This rule comes AFTER the one above and has the same
+    specificity, so its display: flex beats display: block.
+    (On a tie, the later rule wins.)
+*/
+.film-card__poster--missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-color);
+    color: var(--text-muted);
+}
+
+
+/* =====================================
+   TEXT INSIDE THE CARD
+
+   `.film-card h3` is a descendant selector: "an h3 anywhere
+   inside a .film-card". That keeps it from touching other h3s.
+
+   CHANGED: this used to target h2, but FilmCard.jsx renders
+   the title as an <h3>, so the old rule never applied.
+===================================== */
+
+.film-card h3 {
+    font-size: 1rem;
+    margin-top: 0.625rem;
+    margin-bottom: 0.3125rem;
+}
+
+/* Every <p> in the card: the meta line and the synopsis. */
+.film-card p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Meta line: "Film · Country · Year · mins". Small gap below the poster. */
+.film-meta {
+    margin-top: 0.625rem;
+}
+
+
+/* =====================================
+   THEME LIST  (<ul className="theme-list">)
+
+   The reset removed margin/padding, but bullet points are a
+   separate property (list-style), so we remove those too and
+   turn the items into small wrapping tags.
+
+   flex-wrap: wrap  -> when a row is full, tags drop to the next line.
+===================================== */
+
+.theme-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    list-style: none;
+    margin: 0.625rem 0;
+}
+
+.theme-list li {
+    font-size: 0.75rem;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 999px; /* a huge radius = fully rounded ends (a "pill") */
+}

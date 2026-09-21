@@ -1,0 +1,114 @@
+/* =====================================
+   ToggleButton.css  —  THE FILTER PILL
+ 
+   Styles for what ToggleButton.jsx renders:
+ 
+       <label className="pill">
+           <input type="checkbox" />
+           Drama
+       </label>
+ 
+   The trick: the real checkbox is still there (so clicking,
+   keyboard use and screen readers all work for free), but it's
+   made invisible, and the <label> is styled to LOOK like the
+   button. Clicking anywhere on a label ticks the checkbox inside it.
+===================================== */
+
+
+/* =====================================
+   THE PILL (default / unselected look)
+===================================== */
+
+.pill {
+    /*
+        position: relative makes this the "anchor" for any child
+        using position: absolute. Here that's the hidden checkbox
+        below, so it stays inside the pill instead of floating
+        off to some other part of the page.
+    */
+    position: relative;
+
+    /*
+        inline-flex: the pill only takes the width of its content
+        (inline), so several pills sit side by side and wrap to
+        the next line. Flex lets us line up items inside it.
+    */
+    display: inline-flex;
+    align-items: center; /* vertically centre the contents */
+    gap: 0.375rem; /* space between children, if there's more than text */
+
+    padding: 0.375rem 0.875rem; /* top/bottom  left/right */
+    border: 1px solid var(--border-color);
+    border-radius: 999px; /* huge radius = fully rounded ends */
+
+    cursor: pointer;
+    color: var(--text-color);
+
+    /* Smoothly animate these changes over 0.15s instead of snapping. */
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    /* Stops the label text being highlighted when clicked quickly. */
+    user-select: none;
+}
+
+
+/* =====================================
+   THE SELECTED LOOK
+ 
+   :has() is a "parent selector". Read it as:
+       "a .pill THAT HAS an input inside it which is :checked"
+ 
+   Normally CSS can only style downward (parent -> child).
+   :has() lets the parent react to its child's state, which is
+   what lets the label change colour when the checkbox is ticked.
+ 
+   Because the checkbox state drives the styling directly, this
+   works even though the component doesn't yet pass isSelected
+   in from App.
+===================================== */
+
+.pill:has(input:checked) {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+
+/* =====================================
+   THE HIDDEN CHECKBOX
+  
+   Without it, every pill would show a browser-default checkbox
+   square next to the text.
+ 
+   Why not display: none? That removes the element from the
+   keyboard tab order and from screen readers, so nobody could
+   tab to a filter or hear it announced.
+ 
+   Instead we shrink it to 1px, make it fully transparent, and
+   pin it in place with position: absolute (relative to .pill).
+   It's invisible but still fully functional.
+===================================== */
+
+.pill input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+
+/* =====================================
+   KEYBOARD FOCUS  (added)
+ 
+   Since the checkbox is invisible, a keyboard user tabbing
+   through would see nothing showing where they are.
+ 
+   :focus-visible only matches when the browser decides a focus
+   ring is useful (keyboard, not mouse clicks). Same :has()
+   trick as above: the pill reacts to its checkbox.
+===================================== */
+
+.pill:has(input:focus-visible) {
+    outline: 2px solid var(--text-subtle);
+    outline-offset: 2px;
+}

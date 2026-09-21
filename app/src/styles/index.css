@@ -1,0 +1,81 @@
+/* =====================================
+   index.css  —  GLOBAL STYLES ONLY
+
+   Rule of thumb for this file:
+   "Would EVERY component on the site want this?"
+   If yes, it lives here. If it's only for one component,
+   it goes in that component's own .css file.
+
+   This file holds three things:
+     1. CSS variables (the colour palette)
+     2. The reset
+     3. Base styles for <body>
+===================================== */
+
+
+/* =====================================
+   CSS VARIABLES (custom properties)
+
+   :root means "the <html> element", so anything
+   defined here is available to EVERY other css file.
+
+   Usage anywhere else:   color: var(--text-muted);
+
+   Why bother? Change #444 here once and every border on
+   the site updates, instead of hunting through files.
+
+   NOTE: your old .film-card used var(--border-color) but
+   it was never defined anywhere, so the browser ignored the
+   whole border rule. Defining it here fixes that.
+===================================== */
+
+:root {
+    --page-background: black;
+    --surface-color: #222; /* sidebar / placeholder backgrounds */
+    --border-color: #444; /* pills, cards, dividers */
+    --text-color: white;
+    --text-subtle: #aaa; /* headings inside the sidebar */
+    --text-muted: #888; /* secondary text (synopsis, meta) */
+}
+
+
+/* =====================================
+   RESET
+
+   * means "every element".
+
+   Browsers give elements default margins and padding
+   (e.g. <h1>, <p>, <ul>). Those defaults differ slightly
+   between browsers, so we zero them out and add spacing
+   ourselves, on purpose.
+
+   box-sizing: border-box changes how width is calculated.
+     - default (content-box): width: 200px + 20px padding = 240px on screen
+     - border-box:            width: 200px INCLUDES the padding = 200px on screen
+   Much easier to reason about, so nearly every project sets it.
+===================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =====================================
+   BODY
+
+   line-height: 1.5 means each line of text takes up
+   1.5x the font size. It's unitless on purpose, so child
+   elements with different font sizes scale it correctly.
+
+   Colours here are INHERITED: children (p, h1, li...) pick
+   up the white text automatically unless they override it.
+===================================== */
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--page-background);
+}

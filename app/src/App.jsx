@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import FilmCard from './components/FilmCard'
 import ToggleButton from './components/ToggleButton'
 
-import './index.css'
+import './styles/app.css'
 
 // TODO : Move functions to bottom of the page
 
@@ -68,8 +68,9 @@ function App() {
         }
     }
 
-    // change the above function so it takes more arguments and it more reusable as they will effectively do the same thing
-    function FilterSelecter(id) {
+    /*change the above function so it takes more arguments and it more reusable as they will effectively do the same thing
+    though I am not sure how that would work as I would need to pass a reference of the state I am changing in a different script*/
+    function FilterSelector(id) {
         if (selectedFilters.includes(id)) {
             setSelectedFilter(selectedFilters.filter((selectedFilters) => selectedFilters !== id));
         } else {
@@ -99,7 +100,7 @@ function App() {
     const aspectRatio = [...new Set(films.map(film => film.aspectRatio))];
     const color = [...new Set(films.map(film => film.colour))];
 
-
+    // this can probably be done better
     const filterCategories = [
         {
             categoryName: "Form",
@@ -167,53 +168,36 @@ function App() {
                 {/* TODO: figure out if it is possible to grab filter options based on the data associated to the complete dataset */}
                 {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
                 {/*<select className="filter-list-genre" multiple>*/}
-                <div className="filter-list-genre">
+                <div className="filter-list">
                     {
                         filterCategories.map((filterCategory) => (
                                 //do not understand why this is needed
-                                <div>
+                            <div className="filter-category-group">
                                     <p>{filterCategory.categoryName}</p>
 
+                                {/*//TODO: need to rename the local variable filter category*/}
                                     {/*likely need to map through and another underneath similar to this*/}
                                     {/*this just needs to be the same as the category name*/}
+                                <div className="filter-list-toggles">
                                     {
-                                        //TODO: need to rename the local variable filter category
-                                        filterCategory.filterCategory.map((filter, j) => (
 
+                                        filterCategory.filterCategory.map((filter, j) => (
                                             <ToggleButton
                                                 key={filterCategory.id[j]}// need to just set these to be equal to current iteration fo the loop right?
                                                 id={filterCategory.id[j]} // need to just set these to be equal to current iteration fo the loop right?
                                                 name={filterCategory.filterCategory[j]}
-                                                onToggleSelect={FilterSelecter}
+                                                onToggleSelect={FilterSelector}
                                             />
                                         ))
 
                                     }
                                 </div>
+                                </div>
                             ),
                         )
                     }
-
-
-                    {/*{filters.map((filter) => (*/}
-                    {/*    <ToggleButton*/}
-                    {/*        key={filter.id}*/}
-                    {/*        id={filter.id}*/}
-                    {/*        name={filter.name}*/}
-                    {/*        isSelected={selectedFilters.includes(filter.id)}*/}
-                    {/*        onToggleSelect={FilterSelecter}*/}
-                    {/*    />*/}
-                    {/*))}*/}
                 </div>
-                {/*</select>*/}
 
-                {/*<p>☐ Action</p>*/}
-
-                {/*<p>☐ Comedy</p>*/}
-
-                {/*<p>☐ Drama</p>*/}
-
-                {/*<p>☐ Horror</p>*/}
 
             </aside>
 
