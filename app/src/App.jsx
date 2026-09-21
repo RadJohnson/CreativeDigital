@@ -173,7 +173,7 @@ function App() {
                         filterCategories.map((filterCategory) => (
                                 //do not understand why this is needed
                             <div className="filter-category-group">
-                                    <p>{filterCategory.categoryName}</p>
+                                <h3>{filterCategory.categoryName}</h3>
 
                                 {/*//TODO: need to rename the local variable filter category*/}
                                     {/*likely need to map through and another underneath similar to this*/}
