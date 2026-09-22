@@ -4,6 +4,7 @@ import ToggleButton from './components/ToggleButton'
 
 import './styles/app.css'
 
+const filmsUrl = "${import.meta.env.BASE_URL}/public/films.json";
 // TODO : Move functions to bottom of the page
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     // only runs on first load because of [] being empty
     // starts", rather than after every render.
     useEffect(() => {
-        fetch("/films.json")
+        fetch("./public/films.json")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Could not load the film archive.");
