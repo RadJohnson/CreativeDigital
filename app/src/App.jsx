@@ -4,7 +4,7 @@ import ToggleButton from './components/ToggleButton'
 
 import './styles/app.css'
 
-const filmsUrl = `${import.meta.env.BASE_URL}/public/films.json`;
+const filmsUrl = `${import.meta.env.BASE_URL}/films.json`;
 // TODO : Move functions to bottom of the page
 
 function App() {
