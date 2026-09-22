@@ -165,7 +165,7 @@ function App() {
 
                 <h2>Filters</h2>
 
-                {/* TODO: figure out if it is possible to grab filter options based on the data associated to the complete dataset */}
+                {/* TODO: figure out if it is possible to grab filter options based on the data associated to the complete dataset  */}
                 {/* consider getting all the possible filter options to be loaded in to the list box with filter category to be above the options within that list */}
                 {/*<select className="filter-list-genre" multiple>*/}
                 <div className="filter-list">
